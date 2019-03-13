@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <script src="https://unpkg.com/vue"></script>
+
+    </head>
+    <body>
+
+<div id="app">
+  <p>{{ message }}</p>
+  <p>
+    <input id="input" type="text" v-model="message"/>
+    <hr/>
+    <span v-if="gender='male'">gender:{{gender}}</span>
+    <hr/>
+    <span v-if="age > 30">if -- age:{{age}}</span>
+    <span v-else>else -- age:{{age}}</span>
+    <hr/>
+    
+  </p>
+</div>
+
+<script>
+    new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue.js!',
+    gender:'male',
+    age:30
+  }
+})
+    </script>
+    </body>
+</html>
