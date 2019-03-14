@@ -1,0 +1,50 @@
+<html>
+
+<head>
+  <script src="https://unpkg.com/vue"></script>
+  <script>
+     window.onload = function(){
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello Vue.js!',
+          gender: 'female',
+          users: [
+            {
+              name: 'charlie', age: 30
+            },
+            {
+              name: 'jim', age: 12
+            },
+            {
+              name: 'john', age: 45
+            },
+          ],
+        },
+        methods: {
+            show:function () {
+              alert('这是点击事件！');
+            },
+            show2:function () {
+              alert('这是点击事件2222！');
+            }
+          }
+      })
+    }
+    </script>
+</head>
+
+<body>
+
+  <div id="app">
+    <ul v-on:click="show()">
+      <li v-for="user in users">
+        name:{{user.name}},age:{{user.age}}</li>
+    </ul>
+    <div  v-on:click="show2()">abc</div>
+  </div>
+
+
+</body>
+
+</html>
