@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <script src="https://unpkg.com/vue"></script>
+
+    </head>
+    <body>
+
+<div id="app">
+  <ul>
+    <li v-for="user in users" v-bind:class="user.name" v-bind:data-a="user.name" 
+    :data-test="user.age">name:{{user.name}},age:{{user.age}}</li>
+  </ul>
+</div>
+
+<script>
+    var vm = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue.js!',
+    gender:'female',
+    users:[
+      {
+        name:'charlie',age:30
+      },
+      {
+        name:'jim',age:12
+      },
+      {
+        name:'john',age:45
+      },
+    ]
+  }
+})
+    </script>
+    </body>
+</html>
