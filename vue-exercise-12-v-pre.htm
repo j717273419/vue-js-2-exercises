@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="http://unpkg.com/vue/dist/vue.js"></script>
+
+    <script type="text/javascript">
+      window.onload = function() {
+        var vm = new Vue({
+          el: "#box",
+          data: {
+            msg: "hello"
+          },
+          methods: {
+            show: function() {
+              alert("这是点击事件！");
+            },
+            show2: function() {
+              alert("这是点击事件2222！");
+            }
+          }
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <div>
+      如果想显示{{
+      }}标签，而不进行替换，使用v-pre即可调过这个元素和它的子元素的编译过程
+    </div>
+    <div id="box">
+      <input type="button" value="按钮" v-on:click="show()" />
+      <div v-on:click="show2()">abc</div>
+      <h3>{{ msg }}</h3>
+      <h3 v-pre>{{ msg }}</h3>
+    </div>
+  </body>
+</html>
