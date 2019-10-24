@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="http://unpkg.com/vue/dist/vue.js"></script>
+
+    <script type="text/javascript">
+      window.onload = function() {
+        var vm = new Vue({
+          el: "#box",
+          data: {
+            test: "abc",
+            test2: "222",
+            test_txt: "<h2>v-text demo</h2>",
+            test_h2: "<h2>v-html demo</h2>",
+          },
+          methods: {
+            show: function() {
+              alert("这是点击事件！");
+            },
+            show2: function() {
+              alert("这是点击事件2222！");
+            }
+          }
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <p>
+      v-once 仅绑定一次变量的值，之后变量再修改，不再更新界面
+      v-text输出内容，不进行渲染
+      v-html输出内容，进行渲染
+    </p>
+    <div id="box">
+      <input type="button" value="按钮" v-on:click="show()" />
+      <div v-on:click="show2()">abc</div>
+      <h2 v-once v-text="test2"></h2>
+      <h2 v-text="test2"></h2>
+      <div v-text="test_txt"></div>
+      <div v-html="test_h2"></div>
+    </div>
+  </body>
+</html>
