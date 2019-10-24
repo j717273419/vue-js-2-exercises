@@ -1,0 +1,55 @@
+<html>
+
+<head>
+  <script src="http://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <p>{{ message }}</p>
+    <hr />
+    <button id="test" data-val="自定义信息1" v-on:click="func1()">测试方法1</button>
+    <button id="test2" data-val="自定义信息2" @click="func2($event)">测试方法2</button>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!'
+      },
+      methods: {
+        func1(p1) {
+          console.log(p1);
+          alert(p1 + "-" + "pc");
+        },
+        func2(p2) {
+          alert("p2.currentTarget.innerHTML:" + p2.currentTarget.innerHTML);
+          alert("p2.currentTarget.id:" + p2.currentTarget.id);
+          alert("p2.currentTarget.nodeValue:" + p2.currentTarget.nodeValue);
+          alert("p2.currentTarget.value:" + p2.currentTarget.value);
+          alert("p2.currentTarget.innerText:" + p2.currentTarget.innerText);
+          alert("p2.target.getAttribute('data-val'):" + p2.target.getAttribute('data-val'));
+          alert("p2.currentTarget.dataset.val'):" + p2.currentTarget.dataset.val);
+          alert("p2.currentTarget.getAttribute('data-val'):" + p2.currentTarget.getAttribute('data-val'));
+          alert("p2.currentTarget.dataset.val:" + p2.currentTarget.dataset.val);
+          alert("p2.$datas.val:" + p2.$datas.val);
+        }
+      },
+    })
+  </script>
+
+vue.js2获取事件所在的dom信息<br/>
+
+
+reference:<br/>
+ 
+https://www.w3school.com.cn/jsref/event_currenttarget.asp<br/>
+https://www.w3school.com.cn/jsref/dom_obj_event.asp<br/>
+https://www.w3school.com.cn/jsref/dom_obj_all.asp<br/>
+
+
+</body>
+
+</html>
