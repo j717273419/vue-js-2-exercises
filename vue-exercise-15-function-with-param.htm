@@ -9,8 +9,18 @@
   <div id="app">
     <p>{{ message }}</p>
     <hr />
-    <button id="test" data-val="自定义信息1" v-on:click="func1()">测试方法1</button>
+    <button id="test" data-val="自定义信息1" v-on:click="func1(message)">测试方法1</button>
     <button id="test2" data-val="自定义信息2" @click="func2($event)">测试方法2</button>
+    <div v-on:click="funcBubbling(message)" style="width: 150px;height: 200px;background-color: brown;">
+      <button id="test" data-val="自定义信息1" v-on:click="funcBubbling(message)">测试方法3,冒泡</button>
+    </div>
+    <div v-on:click="funcBubbling(message)" style="width: 200px;height: 100px;background-color: pink;">
+
+      <button id="test" data-val="自定义信息1" @click="funcPreventBubbling(message,$event)">测试方法4,阻止冒泡</button>
+      <button id="test" data-val="自定义信息1" @click.stop="funcBubbling(message)">测试方法5,阻止冒泡</button>
+      <button id="test" data-val="自定义信息1" @contextmenu="funcPreventDefault($event)">测试方法6,阻止默认事件</button>
+    </div>
+
   </div>
 
   <script>
@@ -35,20 +45,31 @@
           alert("p2.currentTarget.getAttribute('data-val'):" + p2.currentTarget.getAttribute('data-val'));
           alert("p2.currentTarget.dataset.val:" + p2.currentTarget.dataset.val);
           alert("p2.$datas.val:" + p2.$datas.val);
+        },
+        funcBubbling(msg) {
+          alert(msg);
+        },
+        funcPreventBubbling(msg, e) {
+          alert(msg);
+          e.cancelBubble = true;
+        },
+        funcPreventDefault(e){
+          alert("you catch me");
+          e.preventDefault();
         }
       },
     })
   </script>
 
-vue.js2获取事件所在的dom信息<br/>
+  vue.js2获取事件所在的dom信息<br />
 
 
-reference:<br/>
- 
-https://www.w3school.com.cn/jsref/event_currenttarget.asp<br/>
-https://www.w3school.com.cn/jsref/dom_obj_event.asp<br/>
-https://www.w3school.com.cn/jsref/dom_obj_all.asp<br/>
+  reference:<br />
 
+  https://www.w3school.com.cn/jsref/event_currenttarget.asp<br />
+  https://www.w3school.com.cn/jsref/dom_obj_event.asp<br />
+  https://www.w3school.com.cn/jsref/dom_obj_all.asp<br />
+  https://blog.csdn.net/qq_34645412/article/details/79100669<br />
 
 </body>
 
