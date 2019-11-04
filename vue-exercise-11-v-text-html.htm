@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <script src="http://unpkg.com/vue/dist/vue.js"></script>
+
+    <script type="text/javascript">
+        window.onload = function(){
+            var vm = new Vue({
+                el:'#box',
+                data:{
+                    message:'hi',
+                    name:'wdj',
+                    content:'<h2>v-html demo</h2>'
+                },
+                methods:{
+                    show:function(){
+                        alert('这是点击事件！');
+                    },
+                    show2:function(){
+                        alert('这是点击事件2222！');
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="box">
+        <div>{{message}}</div>
+        <div v-text="name"></div>
+        <div v-html="content"></div>
+    </div>
+</body>
+</html>

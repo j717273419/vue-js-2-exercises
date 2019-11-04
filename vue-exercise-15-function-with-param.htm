@@ -1,0 +1,76 @@
+<html>
+
+<head>
+  <script src="http://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <p>{{ message }}</p>
+    <hr />
+    <button id="test" data-val="自定义信息1" v-on:click="func1(message)">测试方法1</button>
+    <button id="test2" data-val="自定义信息2" @click="func2($event)">测试方法2</button>
+    <div v-on:click="funcBubbling(message)" style="width: 150px;height: 200px;background-color: brown;">
+      <button id="test" data-val="自定义信息1" v-on:click="funcBubbling(message)">测试方法3,冒泡</button>
+    </div>
+    <div v-on:click="funcBubbling(message)" style="width: 200px;height: 100px;background-color: pink;">
+
+      <button id="test" data-val="自定义信息1" @click="funcPreventBubbling(message,$event)">测试方法4,阻止冒泡</button>
+      <button id="test" data-val="自定义信息1" @click.stop="funcBubbling(message)">测试方法5,阻止冒泡</button>
+      <button id="test" data-val="自定义信息1" @contextmenu="funcPreventDefault($event)">测试方法6,阻止默认事件</button>
+    </div>
+
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!'
+      },
+      methods: {
+        func1(p1) {
+          console.log(p1);
+          alert(p1 + "-" + "pc");
+        },
+        func2(p2) {
+          alert("p2.currentTarget.innerHTML:" + p2.currentTarget.innerHTML);
+          alert("p2.currentTarget.id:" + p2.currentTarget.id);
+          alert("p2.currentTarget.nodeValue:" + p2.currentTarget.nodeValue);
+          alert("p2.currentTarget.value:" + p2.currentTarget.value);
+          alert("p2.currentTarget.innerText:" + p2.currentTarget.innerText);
+          alert("p2.target.getAttribute('data-val'):" + p2.target.getAttribute('data-val'));
+          alert("p2.currentTarget.dataset.val'):" + p2.currentTarget.dataset.val);
+          alert("p2.currentTarget.getAttribute('data-val'):" + p2.currentTarget.getAttribute('data-val'));
+          alert("p2.currentTarget.dataset.val:" + p2.currentTarget.dataset.val);
+          alert("p2.$datas.val:" + p2.$datas.val);
+        },
+        funcBubbling(msg) {
+          alert(msg);
+        },
+        funcPreventBubbling(msg, e) {
+          alert(msg);
+          e.cancelBubble = true;
+        },
+        funcPreventDefault(e){
+          alert("you catch me");
+          e.preventDefault();
+        }
+      },
+    })
+  </script>
+
+  vue.js2获取事件所在的dom信息<br />
+
+
+  reference:<br />
+
+  https://www.w3school.com.cn/jsref/event_currenttarget.asp<br />
+  https://www.w3school.com.cn/jsref/dom_obj_event.asp<br />
+  https://www.w3school.com.cn/jsref/dom_obj_all.asp<br />
+  https://blog.csdn.net/qq_34645412/article/details/79100669<br />
+
+</body>
+
+</html>
