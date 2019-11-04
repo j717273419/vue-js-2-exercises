@@ -6,6 +6,6 @@ https://unpkg.com/vue@2.6.10/dist/vue.min.js
 ### vue element demo
 version:
 
-https://unpkg.com/element-ui@2.7.2/lib/theme-chalk/index.css
+https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css
 <br/>
-https://unpkg.com/element-ui@2.7.2/lib/index.js
+https://unpkg.com/element-ui@2.12.0/lib/index.js
