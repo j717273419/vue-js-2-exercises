@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css">
+</head>
+
+<body>
+  <div id="app">
+    <el-button @click="showMsg">{{button_confirm}}</el-button>
+    <el-radio v-model="radio_val" label="zh" @change="change_lang">中文</el-radio>
+    <el-radio v-model="radio_val" label="en" @change="change_lang">English</el-radio>
+    <hr>
+    <p>{{this.$data}}</p>
+  </div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+<script src="./lang/en.js"></script>
+<script src="./lang/zh-CN.js"></script>
+
+<script>
+  var Main = new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        visible: false,
+        radio_val: "en",
+        button_confirm: '',
+      }
+    },
+    methods: {
+      showMsg: function () {
+        alert("当前时间是" + (new Date()));
+      },
+      change_lang: function () {
+        // ELEMENT.locale(this.radio_val);
+        if (this.radio_val == "zh") {
+          this.button_confirm = zh.el.datepicker.confirm;
+        }
+        if (this.radio_val == "en") {
+          this.button_confirm = en.el.datepicker.confirm;
+        }
+      }
+    },
+    beforeCreate: function () {
+      console.group('beforeCreate 创建前状态===============》');
+    },
+    beforeUpdate: function () {
+      console.group('beforeUpdate===============》');
+      // ELEMENT.locale(en);
+      // this.button_confirm = en.el.datepicker.confirm;
+    },
+    mounted: function () {
+      console.group('mounted===============》');
+      // ELEMENT.locale(en);
+      this.button_confirm = en.el.datepicker.confirm;
+    }
+  })
+</script>
+
+</html>
