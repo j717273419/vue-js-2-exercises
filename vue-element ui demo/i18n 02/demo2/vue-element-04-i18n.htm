@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- import CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui@2.12.0/lib/theme-chalk/index.css"
+    />
+    <title>element ui i18n demo</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>element-ui结合vue i18n实现多语言切换 cdn单文件引入方式</h1>
+      <el-button @click="showMsg">{{ $t("el.colorpicker.confirm") }}</el-button>
+      <el-radio v-model="radio_val" label="cn" @change="change_lang"
+        >中文</el-radio
+      >
+      <el-radio v-model="radio_val" label="en" @change="change_lang"
+        >English</el-radio
+      >
+      <hr />
+      <el-date-picker
+        v-model="update_date"
+        type="date"
+        v-bind:placeholder="$t('el.select.placeholder')"
+      >
+      </el-date-picker>
+      <hr />
+      <p>{{ this.$data }}</p>
+    </div>
+  </body>
+  <!-- import Vue before Element -->
+  <script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+  <script src="https://unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+  <script src="./lang/en.js"></script>
+  <script src="./lang/zh-CN.js"></script>
+  <script src="http://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+
+  <script>
+    //告诉vue引入国际化插件
+    Vue.use(VueI18n);
+    // 建立翻译实例
+    const messages = {
+      en: en,
+      cn: cn
+    };
+
+    var localeDefault =
+      Cookies.get("lang") == undefined ? "cn" : Cookies.get("lang");
+    //生成国际化插件实例
+    const i18n = new VueI18n({
+      locale: localeDefault, // set locale
+      messages: messages // set locale messages
+    });
+
+    //设置element-ui的语言
+    if (Cookies.get("lang") == "en") {
+      ELEMENT.locale(en);
+    } else {
+      ELEMENT.locale(cn);
+    }
+
+    var Main = new Vue({
+      el: "#app",
+      i18n: i18n,
+      data: function() {
+        return {
+          visible: false,
+          radio_val: localeDefault,
+          button_confirm: "",
+          update_date: ""
+        };
+      },
+      methods: {
+        showMsg: function() {
+          alert("当前时间是" + new Date());
+        },
+        change_lang: function() {
+          Cookies.set("lang", this.radio_val);
+          this.$i18n.locale = Cookies.get("lang");
+          if (Cookies.get("lang") == "en") {
+            ELEMENT.locale(en);
+          } else {
+            ELEMENT.locale(cn);
+          }
+          location.reload();
+        }
+      },
+      beforeCreate: function() {
+        console.log("beforeCreate 创建前状态===============》");
+        // if (Cookies.get("lang") == "en") {
+        //     ELEMENT.locale(en);
+        //   } else {
+        //     ELEMENT.locale(cn);
+        //   }
+      },
+      beforeUpdate: function() {
+        console.log("beforeUpdate===============》");
+
+        // this.button_confirm = en.el.datepicker.confirm;
+      },
+      mounted: function() {
+        console.log("mounted===============》");
+        // ELEMENT.locale(en);
+        // this.button_confirm = en.el.datepicker.confirm;
+        console.log(this.$data);
+      }
+    });
+  </script>
+</html>
