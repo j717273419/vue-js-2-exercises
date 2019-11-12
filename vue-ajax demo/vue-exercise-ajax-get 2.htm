@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <em>axios demo </em>
+        <p>{{message | currency}}</p>
+        <hr>
+        <button @click="getData">获取BTC价格</button>
+        <h3 style="color:pink" v-show="loading">正在请求数据。。。。。。</h3>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                message: 0.0,
+                loading:false
+            },
+            methods: {
+                getData: function () {
+                    vm.loading = true;
+                    var url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+                    var response = axios.get(url)
+                        .then(
+                            function (response) {
+                                console.log(response.data);
+                                console.log(response.data.bpi.USD.rate_float);
+                                vm.message = response.data.bpi.USD.rate_float;
+                            }
+                        )
+                        .catch(function(error){
+                            console.log(error);
+                        })
+                        .finally(function(){
+                            vm.loading = false;
+                        });
+
+                }
+            },
+            filters:{
+                currency:function(val){
+                    return val.toFixed(2);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
