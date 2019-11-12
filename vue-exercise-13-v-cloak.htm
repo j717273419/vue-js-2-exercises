@@ -15,7 +15,8 @@
         var vm = new Vue({
           el: "#box",
           data: {
-            msg: "hello"
+            msg: "hello",
+            msg2:"world"
           },
           methods: {
             show: function() {
@@ -40,7 +41,7 @@
       <div v-on:click="show2()">abc</div>
 
       <h3>{{ msg }}</h3>
-      <h3 v-cloak>{{ msg }}</h3>
+      <h3 v-cloak>{{ msg2 }}</h3>
     </div>
   </body>
 </html>

@@ -15,6 +15,10 @@
                     },
                     show2:function(){
                         alert('这是点击事件2222！');
+                    },
+                    //ie11不兼容
+                    show3(){
+                        alert('这是点击事件333！');
                     }
                 }
             });
@@ -25,6 +29,8 @@
     <div id="box">
         <input type="button" value="按钮" v-on:click="show()">
         <div  v-on:click="show2()">abc</div>
+        <div  @click="show2()">button</div>
+        <div  @click="show3()">button</div>
     </div>
 </body>
 </html>
