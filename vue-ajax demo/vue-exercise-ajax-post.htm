@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <em>axios post demo </em>
+        <p>{{message}}</p>
+        <hr>
+        <button @click="postJson">post请求json data</button>
+        <br/>
+        <button @click="postJsonStr">post请求json string</button>
+        <h3 style="color:pink" v-show="loading">正在请求数据。。。。。。</h3>
+    </div>
+
+    <script>
+        var user = {
+            username:"charlie",
+            country:"uk"
+        };
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                message: "",
+                loading:false
+            },
+            methods: {
+                postJson: function () {
+                    vm.loading = true;
+                    var url = "https://www.fastmock.site/mock/04c1c7f1cad69cd80f194bff419aa2bf/data/api/student/add";
+                    var response = axios.post(url,user)
+                        .then(
+                            function (response) {
+                                console.log(response);
+                                vm.message = response;
+                            }
+                        )
+                        .catch(function(error){
+                            console.log(error);
+                        })
+                        .finally(function(){
+                            vm.loading = false;
+                        });
+
+                },
+                postJsonStr: function () {
+                    vm.loading = true;
+                    var url = "https://www.fastmock.site/mock/04c1c7f1cad69cd80f194bff419aa2bf/data/api/student/add";
+                    var response = axios.post(url,JSON.stringify(user))
+                        .then(
+                            function (response) {
+                                console.log(response);
+                                vm.message = response;
+                            }
+                        )
+                        .catch(function(error){
+                            console.log(error);
+                        })
+                        .finally(function(){
+                            vm.loading = false;
+                        });
+
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
