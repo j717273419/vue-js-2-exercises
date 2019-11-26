@@ -7,8 +7,6 @@
 <body>
   <div id="app">
     <button-counter></button-counter>
-    <button-counter></button-counter>
-    <button-counter></button-counter>
     <hr/>
     <props-demo title="Vue.js React Angular"></props-demo>
     <hr/>
@@ -36,7 +34,7 @@
 
     Vue.component('props-demo',{
       props:["title"],
-      template:'<h1>{{title}}</h1>'
+      template:'<h4>{{title}}</h4>'
     });
 
     var vm = new Vue({
