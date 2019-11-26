@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <em>axios demo </em>
+      <p>{{this.$data}}</p>
+      <hr />
+      <!-- <h3 style="color:pink" v-show="loading">正在请求数据。。。。。。</h3> -->
+      <div>
+        <select
+          id="one"
+          placeholder="请选择Dept"
+          @change="getData()"
+          v-model="user"
+        >
+          <option v-for="item in one" :value="one.SiteId"
+            >{{item.Department}}</option
+          >
+        </select>
+        <select id="two" placeholder="请选择年龄" v-model="age">
+          <option v-for="item in two" :value="item.class"
+            >{{item.class}}</option
+          >
+        </select>
+      </div>
+    </div>
+
+    <script>
+      //加载一级菜单
+      var load_one = function() {
+        var url =
+          "http://localhost:49626/Dept/getall?siteid=9";
+        axios
+          .get(url)
+          .then(function(response) {
+            console.log("加载一级菜单");
+            console.log(response.data);
+            vm.one = response.data;
+          })
+          .catch(function(error) {
+            console.log("发生异常");
+            console.log(error);
+            return error;
+          })
+          .finally(function() {
+            // vm.loading = false;
+          });
+      };
+      //联动加载二级菜单
+      var load_two = function(val) {
+        var url =
+          "https://www.fastmock.site/mock/04c1c7f1cad69cd80f194bff419aa2bf/data/api/age?age=" +
+          val;
+          axios
+          .get(url)
+          .then(function(response) {
+            console.log("加载一级菜单");
+            console.log(response.data);
+            vm.two = response.data;
+          })
+          .catch(function(error) {
+            console.log("发生异常");
+            console.log(error);
+            return error;
+          })
+          .finally(function() {
+            // vm.loading = false;
+          });
+      };
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          user: "",
+          age: "",
+          one: "",
+          two: ""
+          // loading: false
+        },
+        methods: {
+          getData: function() {
+            // load_two(vm.user);
+          }
+        },
+        created: function() {
+          load_one();
+        },
+        mounted: function() {
+          //load_one();
+        }
+      });
+    </script>
+  </body>
+</html>
