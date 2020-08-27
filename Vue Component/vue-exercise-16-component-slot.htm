@@ -1,13 +1,61 @@
 <html>
-    <head>
-        <script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
 
-    </head>
-    <body>
+<head>
+    <script src="https://unpkg.com/vue"></script>
+</head>
 
+<body>
+    <div id="app">
+        <h1>1.Vue Component 使用slot插槽 匿名插槽</h1>
+        <hr>
+        <button-counter>
+            <hr>
+            <em>我是父组件中用来填充slot内容的</em>
+        </button-counter>
+        <h1>2.Vue Component 使用slot插槽 命名插槽</h1>
+        <hr>
+        <button-counter-slot-name>
+            <h5 slot='up'>我填充up slot</h5>
+            <h3 slot='down'>我填充down slot</h3>
+            <h3 slot='down'>我填充down slot</h3>
+            <h3 slot='down'>我填充down slot</h3>
+        </button-counter-slot-name>
+    </div>
 
-<script>
+    <script>
+        Vue.component("button-counter", {
+            data: function () {
+                return {
+                    count: 0,
+                }
+            },
+            template: '<div><h1>vue component demo basic</h1><button @click="Add">You clicked me {{count}} times.</button><slot></slot></div>',
+            methods: {
+                Add: function () {
+                    this.count++;
+                }
+            }
+        });
 
+        Vue.component("button-counter-slot-name", {
+            data: function () {
+                return {
+                    count: 0,
+                }
+            },
+            template: '<div><slot name="up"></slot><h1>vue component demo basic</h1><button @click="Add">You clicked me {{count}} times.</button><slot name="down"></slot></div>',
+            methods: {
+                Add: function () {
+                    this.count++;
+                }
+            }
+        });
+
+        var vm = new Vue({
+            el: "#app",
+        });
     </script>
-    </body>
+
+</body>
+
 </html>
