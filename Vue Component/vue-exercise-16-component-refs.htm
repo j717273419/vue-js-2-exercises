@@ -1,13 +1,57 @@
 <html>
-    <head>
-        <script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
 
-    </head>
-    <body>
+<head>
+    <script src="https://unpkg.com/vue"></script>
+</head>
 
+<body>
+    <div id="app">
+        <h4>Vue Component 使用$refs从父组件触发子组件的事件</h4>
+        <hr>
+        <button-counter ref='ct'></button-counter>
+        <br>
+        <button @click="Test()">父组件中的按钮</button>
+        <hr>
+        <div ref='emi'><em>我也可以使用ref引用当前页面中的组件</em></div>
+        <button @click="TestRef()">使用ref引用</button>
+        <p>{{content}}</p>
+    </div>
 
-<script>
+    <script>
+        Vue.component("button-counter", {
+            data: function () {
+                return {
+                    count: 0,
+                }
+            },
+            template: '<div><h1>vue component demo basic</h1><button @click="Add">You clicked me {{count}} times.</button><button @click="Say()">我是子组件的按钮</button></div>',
+            methods: {
+                Add: function () {
+                    this.count++;
+                },
+                Say: function () {
+                    alert("我来自子组件");
+                }
+            }
+        });
 
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                content: "通过ref获取元素"
+            },
+            methods: {
+                Test() {
+                    this.$refs.ct.Say()
+                },
+                TestRef: function () {
+                    console.log(this.$refs.emi);
+                    this.content = this.$refs.emi.innerText
+                }
+            }
+        });
     </script>
-    </body>
+
+</body>
+
 </html>
