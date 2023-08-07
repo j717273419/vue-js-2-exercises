@@ -1,0 +1,47 @@
+<html>
+
+<head>
+  <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <button-counter></button-counter>
+    <br>
+    <button-counter2></button-counter2>
+  </div>
+  <script type="text/x-template" id="x-template">
+    <div>
+      <h1>vue component demo basic</h1>
+      <button @click="Add">You clicked me {{count}} times.</button>
+    </div>
+  </script>
+  <script>
+    Vue.component("button-counter", {
+      data: function () {
+        return {
+          count: 0,
+        }
+      },
+      template: '#x-template',
+      methods: {
+        Add: function () {
+          this.count++;
+        }
+      }
+    });
+
+    var vm = new Vue({
+      el: "#app",
+    });
+  </script>
+  
+<p>
+  x-template
+使用此方法，你的模板被定义在例如 index.html 文件中的 script 标签里。此 script 标签使用 text/x-template 标记，并由组件定义的 id 引用。
+这种方法，它允许你使用适当的 HTML 标记编写你的 HTML，不过不好的一面是，它把模板和组件定义的其它部分分离开来。
+
+</p>
+</body>
+
+</html>

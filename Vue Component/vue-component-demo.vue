@@ -12,7 +12,7 @@ module.exports = {
 }
 </script>
 
-<style>
+<style scoped>
 .hello {
     background-color: #ffe;
 }
