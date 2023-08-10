@@ -1,0 +1,131 @@
+<html>
+
+<head>
+  <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+
+</head>
+<style>
+  label {
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE 10+ */
+    user-select: none;
+  }
+</style>
+
+<body>
+
+  <div id="app">
+    <h1>使用复选框,单个，绑定true和false</h1>
+    <p>{{ isChecked }}</p>
+    <input type="checkbox" id="cbxPermission" v-model="isChecked" />
+    <label for="cbxPermission">分配权限</label>
+    <br>
+    <h1>使用复选框,单个，绑定1和0</h1>
+    <p>{{ hasChecked }}</p>
+    <input type="checkbox" id="cbxPermission2" v-model="hasChecked" :true-value="1" :false-value="0" />
+    <label for="cbxPermission2">分配权限2</label>
+    <br>
+    <p>
+      这个demo展示了4个功能点，
+    </p>
+    <p>1是如何在vue中使用checkbox双向绑定数据</p>
+    <p>2是如何结合checkbox和label，实现点击复选框文字时，也能实现选中效果，就是for对应checkbox中的id</p>
+    <p>3是如何设置文本不被选中，就是添加一段css，user-select: none</p>
+    <p>4是如何设置文本不被选中，就是添加一段css，user-select: none</p>
+    <hr>
+    <h1>使用复选框，多个</h1>
+    <p>{{ userPermission }}</p>
+    <ul>
+      <template v-for="item,index in userPermission">
+        <li>
+          <input type="checkbox" :id="'hasCreate'+index" v-model="item.hasCreate" />
+          <label :for="'hasCreate'+index">Create</label>
+
+          <input type="checkbox" :id="'hasRead'+index" v-model="item.hasRead" />
+          <label :for="'hasRead'+index">Read</label>
+
+          <input type="checkbox" :id="'hasDelete'+index" v-model="item.hasDelete" />
+          <label :for="'hasDelete'+index">Delete</label>
+        </li>
+      </template>
+      <p>这个demo展示了2个功能点，</p>
+      <p>1。在多个复选框中绑定对象数组</p>
+      <p>2。当使用v-for生成列表时，可以添加索引，并使用对象绑定来生成唯一的控件id</p>
+    </ul>
+    <hr>
+
+    <h1>使用复选框，多个.绑定的值为数字0和1</h1>
+    <p>{{ userPermissionNum }}</p>
+    <ul>
+      <template v-for="item,index in userPermissionNum">
+        <li>
+          <input type="checkbox" :id="'hasCreateNum'+index" v-model="item.hasCreate" :true-value="1" :false-value="0" />
+          <label :for="'hasCreateNum'+index">Create</label>
+
+          <input type="checkbox" :id="'hasReadNum'+index" v-model="item.hasRead" :true-value="1" :false-value="0" />
+          <label :for="'hasReadNum'+index">Read</label>
+
+          <input type="checkbox" :id="'hasDeleteNum'+index" v-model="item.hasDelete" :true-value="1" :false-value="0" />
+          <label :for="'hasDeleteNum'+index">Delete</label>
+        </li>
+      </template>
+      <p>这个demo展示了1个功能点，</p>
+      <p>1。在多个复选框中绑定对象数组,并且值为数字0和1</p>
+    </ul>
+  </div>
+
+  <script>
+    var s = new Vue({
+      el: '#app',
+      data: {
+        isChecked: false,
+        hasChecked: 0,
+        userPermission: [
+          {
+            hasCreate: false,
+            hasRead: true,
+            hasDelete: false,
+          },
+          {
+            hasCreate: true,
+            hasRead: true,
+            hasDelete: true,
+          },
+          {
+            hasCreate: false,
+            hasRead: false,
+            hasDelete: false,
+          },
+        ],
+        userPermissionNum: [
+          {
+            hasCreate: 0,
+            hasRead: 1,
+            hasDelete: 0,
+          },
+          {
+            hasCreate: 1,
+            hasRead: 1,
+            hasDelete: 1,
+          },
+          {
+            hasCreate: 0,
+            hasRead: 0,
+            hasDelete: 0,
+          },
+        ]
+      },
+      methods: {
+        handlePermission: function () {
+          this.isChecked = !this.isChecked
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

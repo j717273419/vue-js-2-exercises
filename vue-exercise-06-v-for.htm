@@ -1,35 +1,66 @@
 <html>
-    <head>
-        <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
 
-    </head>
-    <body>
+<head>
+  <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
 
-<div id="app">
-  <ul>
-    <li v-for="user in users">name:{{user.name}},age:{{user.age}}</li>
-  </ul>
-</div>
+</head>
 
-<script>
+<body>
+
+  <div id="app">
+    <p>
+      1。v-for直接绑定数据，绑定一个对象数组。只使用第一个参数，取其中的值
+    </p>
+    <ul>
+      <li v-for="user in users">name:{{user.name}},age:{{user.age}}</li>
+    </ul>
+    <hr>
+    <p>
+      2。v-for直接绑定数据，绑定一个对象数组。使用第一个和第二个参数，取其中的值,
+      第一个表示对象，第二个参数是对应的索引
+    </p>
+    <ul>
+      <template v-for="(user,index) in users">
+        <li>{{index+1}}:{{user.name}}</li>
+      </template>
+    </ul>
+    <hr>
+    <p>3。v-for直接绑定数据，绑定一个对象。使用3个参数，取其中的值,
+      第一个表示对象的值，
+      第二个参数表示对象的名称，
+      第三个表示是对应的索引
+    </p>
+    <ul>
+      <template v-for="(value,name,index) in school">
+        <li>{{index+1}}:{{name}}={{value}}</li>
+      </template>
+    </ul>
+  </div>
+
+  <script>
     var vm = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue.js!',
-    gender:'female',
-    users:[
-      {
-        name:'charlie',age:30
-      },
-      {
-        name:'jim',age:12
-      },
-      {
-        name:'john',age:45
-      },
-    ]
-  }
-})
-    </script>
-    </body>
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        gender: 'female',
+        users: [
+          {
+            name: 'charlie', age: 30
+          },
+          {
+            name: 'jim', age: 12
+          },
+          {
+            name: 'john', age: 45
+          },
+        ],
+        school: {
+          address: "usa",
+          fee: "$60,000"
+        }
+      }
+    })
+  </script>
+</body>
+
 </html>
