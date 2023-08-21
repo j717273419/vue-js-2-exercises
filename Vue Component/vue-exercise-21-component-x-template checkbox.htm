@@ -1,0 +1,96 @@
+<html>
+
+<head>
+  <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+  <style>
+    .cbx-one {
+      width: 22px;
+      height: 22px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <p>父组件中获取到的值：{{lst}}</p>
+    <template v-for="item,index in lst">
+      <checkbox-one v-model="item.FHavePermission"></checkbox-one>
+      <br>
+    </template>
+
+    <hr>
+    <p>父组件中获取到的值：{{checkbox1}}</p>
+    <checkbox-two v-model="checkbox1"></checkbox-two>
+  </div>
+  <script type="text/x-template" id="cbx">
+    <div>
+      <input type='checkbox' class='cbx-one' v-model='havePermission' :true-value="1" :false-value="0" />
+    </div>
+  </script>
+
+  <script type="text/x-template" id="cbx2">
+    <div>
+      <label>
+        <input type="checkbox" v-model="isChecked">
+        子组件checkbox
+      </label>
+    </div>
+  </script>
+  <script>
+    Vue.component("checkbox-one", {
+      props: ['value'],
+      data: function () {
+        return {
+          havePermission: this.value,
+        }
+      },
+      template: '#cbx',
+      watch: {
+        havePermission(newVal) {
+          this.$emit('input', newVal);
+        }
+      }
+    });
+
+
+    Vue.component("checkbox-two", {
+      props: ['value'],
+      data: function () {
+        return {
+          isChecked: this.value
+        }
+      },
+      template: '#cbx2',
+      watch: {
+        isChecked(newVal) {
+          this.$emit('input', newVal);
+        }
+      }
+    });
+
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        checkbox1: true,
+        lst: [
+          { FHavePermission: 1 },
+          { FHavePermission: 0 },
+          { FHavePermission: 1 },
+        ]
+      }
+    });
+  </script>
+
+  <p>
+    x-template
+    使用此方法，你的模板被定义在例如 index.html 文件中的 script 标签里。此 script 标签使用 text/x-template 标记，并由组件定义的 id 引用。
+    这种方法，它允许你使用适当的 HTML 标记编写你的 HTML，不过不好的一面是，它把模板和组件定义的其它部分分离开来。
+
+  </p>
+  <hr>
+  <p>
+    在vue中，我定义一个子组件，里边有一个checkbox,实现的是在父组件中获取子组件中是否选中。父组件中会引用多个子组件
+  </p>
+</body>
+
+</html>
