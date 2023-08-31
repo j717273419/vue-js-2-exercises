@@ -1,0 +1,117 @@
+<html>
+
+<head>
+  <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+  <style>
+    .bg {
+      background-color: beige;
+    }
+
+    .cell {
+      position: relative;
+      width: 150px;
+      /* 设置固定的宽度 */
+      height: 100px;
+      /* 设置固定的高度 */
+      border: 1px solid #ccc;
+      overflow: hidden;
+    }
+
+    .cell-content {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .cell-button {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background-color: #f1f1f1;
+      text-align: center;
+      line-height: 30px;
+      display: block;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <p v-html="test">父组件中获取到的值</p>
+    <detail v-model="test"></detail>
+  </div>
+
+  <script type="text/x-template" id="detail">
+    <div class="cell">
+      <div class="cell-content" contenteditable="true" @input="handleInput" ref="editableDiv">{{ value }}</div>
+      <div class="cell-button" @click="showFullContent($event)">...</div>
+    </div>
+  </script>
+  <script>
+    Vue.component("detail", {
+      props: {
+        value: {
+          type: String,
+          required: true
+        }
+      },
+      template: '#detail',
+      methods: {
+        handleInput(event) {
+          const selection = window.getSelection();
+          const range = selection.getRangeAt(0);
+          const oldStartOffset = range.startOffset;
+          const oldEndOffset = range.endOffset;
+          this.$emit('input', event.target.innerText);
+          this.$nextTick(() => {
+            const newRange = document.createRange();
+            newRange.setStart(range.startContainer, oldStartOffset);
+            newRange.setEnd(range.endContainer, oldEndOffset);
+            selection.removeAllRanges();
+            selection.addRange(newRange);
+          })
+        },
+        showFullContent: function (event) {
+          var myDiv = event.currentTarget.parentNode;
+          var contentDiv = myDiv.querySelector(".cell-content");
+          var contentText = contentDiv.innerText;
+          alert(contentText);
+        },
+        checkMousePosition: function (event) {
+          var myDiv = event.currentTarget.parentNode;
+          var detailButton = myDiv.querySelector(".cell-button");
+          var rect = myDiv.getBoundingClientRect();
+          var mouseY = event.clientY - rect.top;
+          var divHeight = myDiv.clientHeight;
+
+          if (mouseY >= divHeight - 30) {
+            detailButton.style.display = "block";
+          } else {
+            detailButton.style.display = "none";
+          }
+        },
+      }
+    })
+
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        test: '我是一行文本'
+      }
+    });
+  </script>
+
+  <p>
+    这里演示了一个使用div做为编辑框的示例，双向同步数据
+
+  </p>
+  <hr>
+  <p>
+    并且修复了一个问题，每次输入一个字符之后，光标都会跳到最前面。
+    这里使用的解决方案是记录光标位置
+  </p>
+</body>
+
+</html>
