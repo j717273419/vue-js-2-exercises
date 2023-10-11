@@ -15,8 +15,15 @@
                 </vue-call-parent>
             </div>
             <hr>
-            <vue-call-parent />
-            
+            <h4>Vue Component 在vue.js 2中，父组件是在一个v-for中绑定了多个子组件，那在子组件input控件中如何更新父组件中的值</h4>
+            <div v-for="(item, index) in items" :key="index">
+                <vue-call-parent2 :item="item" :index="index" v-on:update-item="updateItem"></vue-call-parent2>
+            </div>
+            <hr>
+            <h4>Vue Component 在vue.js 2中，父组件是在一个v-for中绑定了多个子组件，那在子组件div控件中如何更新父组件中的值</h4>
+            <div v-for="(item, index) in items2" :key="index">
+                <vue-call-parent-div :item="item" :index="index" v-on:update-item-child="updateItemChild"></vue-call-parent-div>
+            </div>
         </div>
     </div>
 
@@ -34,26 +41,48 @@
             }
         })
 
-        Vue.component('vue-call-parent', {
-            data: function () {
-                return {
-                    count: 0,
-                    content: '深入理解vue中的emit'
-                }
-            },
-            template: '<div><p>vue子组件:{{content}}</p><button v-on:click="$emit(\'enlarge-text\')">Enlarge text</button></div>',
+        Vue.component('vue-call-parent2', {
+            props: ['item', 'index'],
+            template: '<div> <input type="text" v-model="item.value" @input="updateItemChild" /></div>',
             methods: {
+                updateItemChild() {
+                    this.$emit('update-item', this.item, this.index);
+                }
+            }
+        })
 
+        Vue.component('vue-call-parent-div', {
+            props: ['item', 'index'],
+            template: '<div><div contenteditable="true" v-model="item.value" @input="updateItemChild">{{item.value}}</div></div>',
+            methods: {
+                updateItemChild() {
+                    this.$emit('update-item-child', this.item, this.index);
+                }
             }
         })
 
         var vm = new Vue({
             el: '#app',
             data: {
-                pFontSize: 1
+                pFontSize: 1,
+                items: [
+                    { value: 'Item 1' },
+                    { value: 'Item 2' },
+                    { value: 'Item 3' }
+                ],
+                items2: [
+                    { value: 'Item 12' },
+                    { value: 'Item 22' },
+                    { value: 'Item 32' }
+                ]
             },
             methods: {
-
+                updateItem(item, index) {
+                    this.items[index] = item;
+                },                
+                updateItemChild(item, index) {
+                    this.items2[index] = item;
+                },
             }
         })
     </script>

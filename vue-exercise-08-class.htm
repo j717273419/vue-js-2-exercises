@@ -1,0 +1,68 @@
+<html>
+
+<head>
+  <style>
+    .a {
+      color: red;
+    }
+
+    .b {
+      color: blue;
+    }
+
+    .c {
+      color: green;
+    }
+  </style>
+  <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+
+</head>
+
+<body>
+
+  <div id="app">
+    <ul>
+      <li v-for="user in users" v-bind:class="user.name" v-bind:data-a="user.name" :data-test="user.age" :class="getClassName(user.age)">name:{{user.name}},age:{{user.age}}</li>
+    </ul>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        gender: 'female',
+        users: [
+          {
+            name: 'charlie', age: 30
+          },
+          {
+            name: 'jim', age: 12
+          },
+          {
+            name: 'john', age: 45
+          },
+        ]
+      },
+      methods: {
+        getClassName(value) {
+          switch (value) {
+            case 12:
+              return 'a';
+            case 30:
+              return 'b';
+            case 45:
+              return 'c';
+            default:
+              return '';
+          }
+        },
+      },
+    })
+  </script>
+
+  <br />
+  v-bind:data-url，可以给缩写成:data-url
+</body>
+
+</html>
