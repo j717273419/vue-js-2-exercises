@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+
+    <script type="text/javascript">
+        window.onload = function(){
+            var vm = new Vue({
+                el:'#box',
+                data:{
+                    p1:"<div @click='show2' v-show='calcBtn'>button</div>",
+                    p2:"<div @click='show2' v-show='!calcBtn'>button2</div>",
+
+                    p3:'<div @click="show2" v-show="calcBtnParam(12)">button3</div>',
+                    p4:'<div @click="show2" v-show="calcBtnParam2(3)">button4</div>',
+                },
+                methods:{
+                    show:function(){
+                        alert('这是点击事件！');
+                    },
+                    show2:function(){
+                        alert('这是点击事件2222！');
+                    },
+                    //ie11不兼容
+                    show3(){
+                        alert('这是点击事件333！');
+                    },
+                    show4:function(val){
+                        alert(`点击事件2222！${val}`);
+                    },
+                },
+                computed:{
+                    calcBtn:function(){
+                        return false
+                    },
+                    //vue中computed传参数
+                    calcBtnParam:function(){
+                        return function(val){
+                            if(val > 10){
+                                return true
+                            }
+                            return false
+                        }
+                    },
+                    //vue中computed传参数，简写模式
+                    calcBtnParam2(){
+                        return function(val){
+                            if(val > 10){
+                                return true
+                            }
+                            return false
+                        }
+                    },
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="box">
+        <input type="button" value="按钮" v-on:click="show()">
+        <div v-on:click="show2()">abc</div>
+        <div @click="show2">button</div>
+        <div @click="show3()">button</div>
+        <div @click="show4('hello github')">button</div>
+        <h1>这里展示computed的用法</h1>
+        <hr>
+        <h3>1。computed普通用法，不带参数</h3>
+        <p v-text="p1"></p>
+        <p v-text="p2"></p>
+        <div @click="show2" v-show="calcBtn">button</div>
+        <hr>
+        <div @click="show2" v-show="!calcBtn">button2</div>
+        
+        <hr>
+        <h3>2。computed特殊用法，带参数</h3>
+        <p v-text="p3"></p>
+        <pre>
+            //vue中computed传参数
+            calcBtnParam:function(){
+                return function(val){
+                    if(val > 10){
+                        return true
+                    }
+                    return false
+                }
+            },
+        </pre>
+        <p v-text="p4"></p>
+        <pre>
+            //vue中computed传参数，简写模式
+            calcBtnParam2(){
+                return function(val){
+                    if(val > 10){
+                        return true
+                    }
+                    return false
+                }
+            },
+        </pre>
+        <div @click="show2" v-show="calcBtnParam(12)">button3</div>
+        <hr>
+        <div @click="show2" v-show="calcBtnParam2(3)">button4</div>
+    </div>
+</body>
+</html>

@@ -29,10 +29,16 @@
       第一个表示对象的值，
       第二个参数表示对象的名称，
       第三个表示是对应的索引
+
+      注意
     </p>
     <ul>
       <template v-for="(value,name,index) in school">
         <li>{{index+1}}:{{name}}={{value}}</li>
+        1这个input不会双向绑定，因为绑定的是value
+        <input type="text" v-model="value" />
+        2这个input是双向绑定,因为绑定的是school[name]
+        <input type="text" v-model="school[name]" />
       </template>
     </ul>
   </div>
